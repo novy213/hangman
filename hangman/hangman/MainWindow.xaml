@@ -62,9 +62,60 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="FocusVisual1">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background1" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border1" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background1" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border1" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background1" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border1" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background1" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border1" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground1" Color="#FF838383"/>
+        <Style x:Key="ButtonStyle2" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background1}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border1}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border1}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid Background="LightCoral">
-        <Grid x:Name="MainMenu" Visibility="Collapsed">
+        <Grid x:Name="MainMenu" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -77,7 +128,131 @@
             <TextBlock Text="Hangman" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="48" FontWeight="Bold" Grid.ColumnSpan="2" FontFamily="Arial Rounded MT Bold"/>
             <Button Style="{DynamicResource ButtonStyle1}" FontSize="20" Background="Coral" Width="180" Height="60" Grid.Row="1" Grid.ColumnSpan="2" Content="Play" Click="Play_click"/>
         </Grid>
-        <Grid x:Name="PlauGrid">
+        <Grid x:Name="PlayGrid" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="Word" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+            <Button x:Name="button1" Style="{DynamicResource ButtonStyle2}" Content="A" Margin=" 0" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button2" Style="{DynamicResource ButtonStyle2}" Content="B" Margin="35 0" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button3" Style="{DynamicResource ButtonStyle2}" Content="C" Margin="70 0" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button4" Style="{DynamicResource ButtonStyle2}" Content="D" Margin="105 0" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button5" Style="{DynamicResource ButtonStyle2}" Content="E" Margin="140 0" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button6" Style="{DynamicResource ButtonStyle2}" Content="F" Margin="175 0" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button7" Style="{DynamicResource ButtonStyle2}" Content="G" Margin="0 35" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button8" Style="{DynamicResource ButtonStyle2}" Content="H" Margin="35 35" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button9" Style="{DynamicResource ButtonStyle2}" Content="I" Margin="70 35" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button10" Style="{DynamicResource ButtonStyle2}" Content="J" Margin="105 35" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button11" Style="{DynamicResource ButtonStyle2}" Content="K" Margin="140 35" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button12" Style="{DynamicResource ButtonStyle2}" Content="L" Margin="175 35" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button13" Style="{DynamicResource ButtonStyle2}" Content="M" Margin="0 70" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button14" Style="{DynamicResource ButtonStyle2}" Content="N" Margin="35 70" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button15" Style="{DynamicResource ButtonStyle2}" Content="O" Margin="70 70" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button16" Style="{DynamicResource ButtonStyle2}" Content="P" Margin="105 70" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button17" Style="{DynamicResource ButtonStyle2}" Content="Q" Margin="140 70" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button18" Style="{DynamicResource ButtonStyle2}" Content="R" Margin="175 70" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button19" Style="{DynamicResource ButtonStyle2}" Content="S" Margin="0 105" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button20" Style="{DynamicResource ButtonStyle2}" Content="T" Margin="35 105" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button21" Style="{DynamicResource ButtonStyle2}" Content="U" Margin="70 105" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button22" Style="{DynamicResource ButtonStyle2}" Content="V" Margin="105 105" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button23" Style="{DynamicResource ButtonStyle2}" Content="W" Margin="140 105" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button25" Style="{DynamicResource ButtonStyle2}" Content="X" Margin="175 105" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button26" Style="{DynamicResource ButtonStyle2}" Content="Y" Margin="0 140" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+            <Button x:Name="button27" Style="{DynamicResource ButtonStyle2}" Content="Z" Margin="35 140" Width="25" Height="25" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" FontFamily="Arial Rounded MT Bold" Click="Letter_click" FontSize="20"/>
+
+            <Canvas Grid.Row="1">
+                <Line Visibility="Collapsed" x:Name="line1" X1="0" Y1="0" X2="0" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="81" Canvas.Top="178" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="30"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Visibility="Collapsed" x:Name="line2" X1="0" Y1="0" X2="0" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="95.5" Canvas.Top="176.5" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-30"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Visibility="Collapsed" x:Name="line3" Y2="130" StrokeThickness="5" Stroke="Black" Canvas.Left="88.5" Canvas.Top="50" RenderTransformOrigin="1 1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Line Visibility="Collapsed" x:Name="line5" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="178" Canvas.Top="50" RenderTransformOrigin="1 1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Line Visibility="Collapsed" x:Name="line7" Y2="60" StrokeThickness="5" Stroke="Black" Canvas.Left="178" Canvas.Top="107" RenderTransformOrigin="1 1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Line Visibility="Collapsed" x:Name="line8" X1="0" Y1="0" X2="0" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="170" Canvas.Top="116" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="30"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Visibility="Collapsed" x:Name="line9" X1="0" Y1="0" X2="0" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="185" Canvas.Top="114" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-30"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Visibility="Collapsed" x:Name="line10" X1="0" Y1="0" X2="0" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="171" Canvas.Top="160" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="30"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Visibility="Collapsed" x:Name="line11" X1="0" Y1="0" X2="0" Y2="30" StrokeThickness="5" Stroke="Black" Canvas.Left="185" Canvas.Top="159" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-30"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Visibility="Collapsed" x:Name="line4" Y2="90" StrokeThickness="5" Stroke="Black" Canvas.Left="88" Canvas.Top="-35" RenderTransformOrigin="1 1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Line Y2="100" Y1="-200" StrokeThickness="5" Stroke="Black" Canvas.Left="6" Canvas.Top="110" RenderTransformOrigin="1 1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Line.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Line.RenderTransform>
+                </Line>
+                <Ellipse Visibility="Collapsed" x:Name="line6" StrokeThickness="5" Stroke="Black" Width="30" Height="30" Canvas.Left="163" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            </Canvas>
+        </Grid>
+        <Grid x:Name="EndGame" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -87,8 +262,24 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="test" Text="123"/>
-            <Button Width="120" Height="40" Click="Button_Click"/>
+            <TextBlock Text="The End" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42" FontWeight="Bold" FontFamily="Arial Rounded MT Bold" />
+            <TextBlock x:Name="WordResult" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
+            <Button Content="Return to menu" Style="{DynamicResource ButtonStyle1}" FontSize="20" Background="Coral" Width="180" Height="60" Grid.ColumnSpan="2" Grid.Row="3" Click="Return_click"/>
+        </Grid>
+        <Grid x:Name="WinGrid" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="WinWordResult" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
+            <TextBlock Text="You win!" FontSize="64" FontWeight="Bold" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Rounded MT Bold"/>
+            <Button Content="Return to menu" Style="{DynamicResource ButtonStyle1}" FontSize="20" Background="Coral" Width="180" Height="60" Grid.ColumnSpan="2" Grid.Row="3" Click="Return_click"/>
+
         </Grid>
     </Grid>
 </Window>
